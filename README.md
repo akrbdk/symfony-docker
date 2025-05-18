@@ -1,7 +1,6 @@
 # symfony-docker
 
-Fast and easy Docker-based project setup for Symfony 6.4.
-
+Fast and easy Docker-based project setup for Symfony 7.2
 
 ## Run project
 
