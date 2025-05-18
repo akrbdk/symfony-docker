@@ -13,22 +13,25 @@ help:
 	@printf '		running docker containers\n'
 	@make print-color-green TEXT='up-backend'
 	@printf '		running backend services\n'
+	@make print-color-green TEXT='init-webapp'
+	@printf '		install skeleton and webapp inside my_project_directory - move it manually later\n'
 
-up-backend: up-containers
+up-backend:
 	@make composer-install
-	@make init-env
 
 up-containers:
 	@make docker-compose-exec COMPOSE_CMD="up -d --build"
 
+init-webapp:
+	@make docker-exec CONTAINER="app" CONTAINER_CMD="composer create-project symfony/skeleton:\"6.4.*\" my_project_directory"
+	@make docker-exec CONTAINER="app" CONTAINER_CMD="cd skeleton"
+	@make docker-exec CONTAINER="app" CONTAINER_CMD="composer require webapp"
+
 composer-install:
 	@make docker-exec CONTAINER="app" CONTAINER_CMD="composer install -n"
 
-init-env:
-	@test -f .env || cp .env .env.local
-
 docker-exec:
-	@docker exec -it $(APP_NAME)-$(CONTAINER) $(CONTAINER_CMD)
+	@docker exec -it symfony_docker_$(CONTAINER) $(CONTAINER_CMD)
 
 docker-compose-exec:
 	@docker compose $(COMPOSE_CMD)
