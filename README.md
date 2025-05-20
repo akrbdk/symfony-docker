@@ -11,6 +11,10 @@ make up-containers
 make init-webapp
 ```
 
+## Then 2-nd step
+
+add `/.idea/` to `.gitignore.` before commiting
+
 ## Check availability
 
 - Открываем http://localhost:8080 → Symfony.
